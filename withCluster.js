@@ -16,4 +16,8 @@ function master() {
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
+  cluster.on('exit', function(deadWorker, code, signal) {
+    cluster.fork();
+    console.log("Restarted worker");
+  });
  }
